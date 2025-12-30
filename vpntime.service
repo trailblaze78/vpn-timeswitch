@@ -1,0 +1,11 @@
+[Unit]
+Description=Force tyime-sync when using vpn
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash -c '\
+    sleep 2; \
+    TZ=$(curl -s https://ipinfo.io/timezone); \
+    if [ -n "$TZ" ] && [ -f "/usr/share/zoneinfo/$TZ" ]; then \
+        timedatectl set-timezone "$TZ"; \
+    fi'

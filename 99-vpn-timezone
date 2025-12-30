@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+IFACE="$1"
+STATUS="$2"
+
+#react to proton interface
+if [[ "$IFACE" == "proton0" ]]; then
+    systemctl start vpntime.service
+fi
