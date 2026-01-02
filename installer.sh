@@ -1,4 +1,15 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash typewriter()
+
+typewriter() {
+    local text="$1"
+    local delay="0.03"
+    for ((i=0; i<${#text}; i++)); do
+        printf "%s" "${#text:$i:1}"
+        sleep "$delay"
+    done
+    printf "\n"
+}
+    
  
  #validation block
 if [ "$EUID" -ne 0 ]; then
@@ -36,3 +47,4 @@ install -m 755 "$DISPATCHER_SRC" "$DISPATCHER_DST"
 systemctl restart NetworkManager
 
  #closing status
+echo "Installation completed successfully"
