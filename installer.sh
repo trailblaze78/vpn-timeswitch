@@ -47,4 +47,7 @@ install -m 755 "$DISPATCHER_SRC" "$DISPATCHER_DST"
 systemctl restart NetworkManager
 
  #closing status
-echo "Installation completed successfully"
+typewriter "Installation completed successfully."
+typewriter "The service has been enabled."
+typewriter "The system's timezone will sync with the ip address' geolocation as soon as vpn connection is established."
+typewriter "A slight delay might occur between system settings and GUI. "
