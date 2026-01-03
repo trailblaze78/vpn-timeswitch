@@ -4,4 +4,4 @@ Simple service tool that automatically switches system timezone to match your ip
 WARNING <br>
 This version is still under development. <br>
 The installer will set set up a files in system folders, therefore it is necessary running with root permissions. <br>
-The installer will enable NTP Synchronisation to ensure correct.
+The installer will enable NTP Synchronisation to ensure correct time-date settings
