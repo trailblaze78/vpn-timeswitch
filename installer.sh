@@ -4,7 +4,7 @@ typewriter() {
     local text="$1"
     local delay="0.03"
     for ((i=0; i<${#text}; i++)); do
-        printf "%s" "${#text:$i:1}"
+        printf "%s" "${text:$i:1}"
         sleep "$delay"
     done
     printf "\n"
