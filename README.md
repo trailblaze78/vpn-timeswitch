@@ -2,6 +2,6 @@
 Simple service tool that automatically switches system timezone to match your ip address location. Only for ProtonVPN GUI and only tested on Arch Linux. More versions are in development.
 
 WARNING <br>
-This version is still under development.
-The installer will set set up a files in system folders, therefore it is necessary running with root permissions.
+This version is still under development. <br>
+The installer will set set up a files in system folders, therefore it is necessary running with root permissions. <br>
 The installer will enable NTP Synchronisation to ensure correct.
