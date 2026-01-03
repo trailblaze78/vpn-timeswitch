@@ -1,4 +1,4 @@
-#!/usr/bin/env bash typewriter()
+#!/usr/bin/env bash
 
 typewriter() {
     local text="$1"
