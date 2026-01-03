@@ -46,8 +46,16 @@ mkdir -p /etc/NetworkManager/dispatcher.d
 install -m 755 "$DISPATCHER_SRC" "$DISPATCHER_DST"
 systemctl restart NetworkManager
 
- #closing status
+ #closing status and RTC check
 typewriter "Installation completed successfully."
 typewriter "The service has been enabled."
+
+ ########-block K - NTP sync check-########
+ 
+if ! timedatectl show | grep NTPSynchronized=yes; then
+    timedatectl set-ntp true
+    typewriter "NTP was updated to ensure accurate system time."
+fi
+
 typewriter "The system's timezone will sync with the ip address' geolocation as soon as vpn connection is established."
 typewriter "A slight delay might occur between system settings and GUI. "
