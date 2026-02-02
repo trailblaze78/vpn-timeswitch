@@ -5,7 +5,6 @@ Description=Force tyime-sync when using vpn
 Type=oneshot
 ExecStart=/usr/bin/bash -c '\
     sleep 2; \
-    DEFAULT_TZ="UTC"; \
     RESPONSE=$(curl -s -w "%{http_code}" https://ipinfo.io/timezone); \
     TZ="${RESPONSE::-3}"; \
     CODE="${RESPONSE: -3}; \
