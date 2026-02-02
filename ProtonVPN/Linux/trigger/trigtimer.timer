@@ -1,0 +1,9 @@
+[Unit]
+Description=Periodically trigger timezone update
+
+[Timer]
+OnBoot=30s
+Unit=trigtimer.service
+
+[Install]
+WantedBy=timers.target
