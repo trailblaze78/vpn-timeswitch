@@ -9,3 +9,4 @@ ExecStart=/usr/bin/bash -c '\
     if [ -n "$TZ" ] && [ -f "/usr/share/zoneinfo/$TZ" ]; then \
         timedatectl set-timezone "$TZ"; \
     fi'
+// add logic for if curl returns not found set to default timezone
