@@ -3,7 +3,11 @@
 IFACE="$1"
 STATUS="$2"
 
+#add react to system startup
+
 #react to proton interface
 if [[ "$IFACE" == "proton0" ]]; then
     systemctl start vpntime.service
 fi
+
+#add react to connection down
