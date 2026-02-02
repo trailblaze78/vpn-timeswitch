@@ -5,8 +5,14 @@ Description=Force tyime-sync when using vpn
 Type=oneshot
 ExecStart=/usr/bin/bash -c '\
     sleep 2; \
-    TZ=$(curl -s https://ipinfo.io/timezone); \
-    if [ -n "$TZ" ] && [ -f "/usr/share/zoneinfo/$TZ" ]; then \
+    DEFAULT_TZ="UTC"; \
+    RESPONSE=$(curl -s -w "%{http_code}" https://ipinfo.io/timezone); \
+    TZ="${RESPONSE::-3}"; \
+    CODE="${RESPONSE: -3}; \
+    \
+    #validate result
+    if [ "$CODE" = "200" ] && [ -n "$TZ" ] && [ -f "/usr/share/zoneinfo/$TZ" ]; then \
         timedatectl set-timezone "$TZ"; \
+    else \
+        timedatectl set-timezone "$DEFAULT_TZ"; \
     fi'
-// add logic for if curl returns not found set to default timezone
