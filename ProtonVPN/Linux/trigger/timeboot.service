@@ -1,0 +1,12 @@
+[Unit]
+Description=Reset default timezone on boot
+After=local-fs.target
+Wants=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl start vpntime.service
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

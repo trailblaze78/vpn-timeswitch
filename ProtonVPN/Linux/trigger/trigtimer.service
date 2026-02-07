@@ -1,6 +1,0 @@
-[Unit]
-Description=Trigger vpntime.service
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/systemctl start vpntime.service
