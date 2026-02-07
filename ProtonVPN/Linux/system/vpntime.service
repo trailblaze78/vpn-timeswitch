@@ -3,15 +3,4 @@ Description=Force tyime-sync when using vpn
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/bash -c '\
-    sleep 2; \
-    RESPONSE=$(curl -s -w "%{http_code}" https://ipinfo.io/timezone); \
-    TZ="${RESPONSE::-3}"; \
-    CODE="${RESPONSE: -3}"; \
-    \
-    #validate result
-    if [ "$CODE" = "200" ] && [ -n "$TZ" ] && [ -f "/usr/share/zoneinfo/$TZ" ]; then \
-        timedatectl set-timezone "$TZ"; \
-    else \
-        timedatectl set-timezone "$DEFAULT_TZ"; \
-    fi'
+ExecStart=/usr/local/bin/vpntime.sh
