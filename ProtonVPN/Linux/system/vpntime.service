@@ -4,3 +4,6 @@ Description=Force tyime-sync when using vpn
 [Service]
 Type=oneshot
 ExecStart=/usr/local/bin/vpntime.sh
+
+[Install]
+WantedBy=multi-user.target
