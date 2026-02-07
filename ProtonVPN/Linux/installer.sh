@@ -10,18 +10,18 @@ typewriter() {
     printf "\n"
 }
      
- #validation block
+#validation block
 if [ "$EUID" -ne 0 ]; then
     echo "Error: This installer needs to be run as root."
-    exit1
+    exit 1
 fi
 
 if ! command -v systemctl >/dev/null 2>&1; then
     echo "Error: systemd is not available on this system."
-    exit1
+    exit 1
 fi
 
- #installation block
+#installation block
 
 TIMEZONE_CHOICES=(
     "Africa/Cairo"
@@ -55,7 +55,7 @@ EOF
 }
 #-abort helper 
 abort_install() {
-    echo "✖️  Installation aborted."
+    echo "Installation aborted."
     exit 1
 }
 
@@ -84,7 +84,7 @@ run_interactive() {
         SELECTED_TZ="${TIMEZONE_CHOICES[$((choice-1))]}"
         echo "You chose: $SELECTED_TZ"
         write_config "$SELECTED_TZ"
-        exit 0
+        return 0
 }
         
 #-noninteractive mode
@@ -94,7 +94,7 @@ handle_noninteractive() {
         if (( input >= 1 && input <= ${#TIMEZONE_CHOICES[@]} )); then
            SELECTED_TZ="${TIMEZONE_CHOICES[$((input-1))]}"
            write_config "$SELECTED_TZ"
-           exit 0
+           return 0
         else 
            echo "Number $INPUT is out of range. Switching to interactive mode."
            run_interactive
@@ -103,29 +103,37 @@ handle_noninteractive() {
           if printf '%\n' "${TIMEZONE_CHOICES[@]}" | grep -Fxq "$input"; then 
               SELECTED_TZ="$input"
               write_config "$SELECTED_TZ"
-              exit 0
+              return 0
         else
              echo " \"$input\" is not a supported timezone. Switching to interactive mode"
              run_interactive 
         fi
     fi
 }
+
+#invoking
+if [[ -t 0 && -t 1 ]]; then
+    run_interactive          # interactive terminal → ask the user
+else
+    handle_noninteractive "$1"   # non‑interactive, expect an argument
+fi
            
 #setting up service and files
-SCRIPT_SRC="./ProtonVPN/Linux/system/vpntime.sh"
+SCRIPT_SRC="./system/vpntime.sh"
 SCRIPT_DST="/usr/local/bin/vpntime.sh"
 install -m 755 "$SCRIPT_SRC" "$SCRIPT_DST"
 
-SERVICE_SRC="./ProtonVPN/Linux/system/vpntime.service"
+SERVICE_SRC="./system/vpntime.service"
 SERVICE_DST="/etc/systemd/system/vpntime.service"
 install -m 644 "$SERVICE_SRC" "$SERVICE_DST"
 
-TRIGBOOT_SRC="./ProtonVPN/Linux/trigger/timeboot.service"
+TRIGBOOT_SRC="./trigger/timeboot.service"
 TRIGBOOT_DST="/etc/systemd/system/timeboot.service"
 install -m 644 "$TRIGBOOT_SRC" "$TRIGBOOT_DST"
 
-TRIGGER_SRC="./ProtonVPN/Linux/trigger/vpn-tz@.service"
+TRIGGER_SRC="./trigger/vpn-tz@.service"
 TRIGGER_DST="/etc/systemd/system/vpn-tz@.service"
+install -m 644 "$TRIGGER_SRC" "$TRIGGER_DST"
 systemctl daemon-reload
 systemctl enable vpntime.service
 systemctl enable timeboot.service
