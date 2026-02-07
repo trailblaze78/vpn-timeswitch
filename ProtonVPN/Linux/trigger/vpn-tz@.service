@@ -1,0 +1,13 @@
+#/etc/systemd/system/vpn-tz@.service
+[Unit]
+Description=Trigger vpntime.service
+BindsTo=sys-subsystem-net-devices-%i.device
+After=sys-subsystem-net-devices-%i.device
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/vpntime.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=sys-subsystem-net-devices-%i.device
