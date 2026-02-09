@@ -7,5 +7,5 @@
     if [ "$CODE" = "200" ] && [ -n "$TZ" ]; then
         timedatectl set-timezone "$TZ";
     else
-        timedatectl set-timezone Europe/London;
+        timedatectl set-timezone $TZ;
     fi
