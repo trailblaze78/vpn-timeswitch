@@ -1,5 +1,7 @@
 # vpn-timeswitch
+
 Simple service tool that automatically switches system timezone to match your ip address location. Only tested on ProtonVPN GUI and on Arch Linux, but this version should also support other vpn services and Linux Repos. More versions are in development, especially for Windows and Mac, possibly an app for mobile in the future. Please any suggestion or advice is welcome: jerry.co45@tutamail.com
+Also available from: https://thermalstudios.xyz
 
 WARNING <br>
 This version is still under development. <br>
